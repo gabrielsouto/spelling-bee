@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#a9dfed" />
+  <meta name="description" content="A little bee, a big adventure in spelling. Listen, spell out loud, and beat your best streak." />
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+  <link rel="stylesheet" href="./assets/fonts.css" />
+  <title>Spelling Bee · Listen. Spell. Shine.</title>
+</head>
+<body>
+  <svg class="icon-defs" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="m8 5 11 7-11 7z"/></symbol>
+    <symbol id="i-trophy" viewBox="0 0 24 24"><path d="M8 3h8v6a4 4 0 0 1-8 0V3Zm0 2H4v2a4 4 0 0 0 4 4m8-6h4v2a4 4 0 0 1-4 4m-4 2v6m-4 2h8"/></symbol>
+    <symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10v2a7 7 0 0 0 14 0v-2m-7 9v3m-4 0h8"/></symbol>
+    <symbol id="i-repeat" viewBox="0 0 24 24"><path d="m17 2 4 4-4 4M3 11V8a2 2 0 0 1 2-2h16M7 22l-4-4 4-4m14-1v3a2 2 0 0 1-2 2H3"/></symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24"><path d="M4 7h16M4 17h16"/><circle cx="9" cy="7" r="3"/><circle cx="15" cy="17" r="3"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M6 18 18 6"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h16m-6-6 6 6-6 6"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/></symbol>
+  </defs></svg>
+  <div class="app-shell">
+    <header class="topbar">
+      <button class="brand" id="home-button" aria-label="Spelling Bee home"><span class="brand-tile" aria-hidden="true">B</span><span>spelling bee<span class="brand-sub">THE SPELL-IT-OUT GAME</span></span></button>
+      <div class="top-actions"><span class="best-pill"><svg class="icon"><use href="#i-trophy"/></svg><span>Best <b id="header-best">0</b></span></span><button class="icon-button" id="settings-button" aria-label="Settings: words, voice and sound" title="Settings"><svg class="icon"><use href="#i-settings"/></svg></button></div>
+    </header>
+
+    <main>
+      <div class="game-layout">
+        <section class="game-card" id="game-card" data-state="loading" aria-label="Spelling game">
+          <div class="card-top"><span class="round-tag" id="round-tag">LET'S PRACTICE</span><span class="streak-label">STREAK <b id="streak">00</b></span></div>
+          <div class="stage">
+            <div class="home-copy" id="home-copy"><p class="eyebrow">LITTLE BEE. BIG WORDS.</p><h1>spelling<br><span>bee!</span></h1></div>
+            <div class="bee-space" aria-hidden="true"><div class="bee-wrap" id="bee-wrap"><img class="bee" src="./assets/bee.png" alt="" width="280" height="280"/><span class="bee-shadow"></span></div></div>
+            <div class="speech-bubble" id="speech-bubble" aria-hidden="true">Let's play!</div>
+            <div class="countdown" id="countdown" hidden aria-live="assertive"></div>
+            <div class="play-content" id="play-content" hidden>
+              <h2 id="round-heading">Listen carefully…</h2>
+              <label class="sr-only" for="letters">Letters heard</label>
+              <input id="letters" class="letter-box" type="text" readonly autocomplete="off" spellcheck="false" aria-describedby="game-message" value="" />
+              <div class="timer-row" id="timer-row" hidden><div class="timer-track" role="progressbar" aria-label="Seconds of silence remaining" aria-valuemin="0" aria-valuemax="10" aria-valuenow="10" id="timer-track"><span id="timer-fill"></span></div><span id="timer-label">10s</span><div class="sound-bars" id="sound-bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div></div>
+            </div>
+            <div class="result" id="result" hidden><p class="eyebrow" id="result-kicker"></p><h2 id="result-heading"></h2><p id="result-word"></p><p class="result-detail" id="result-detail"></p></div>
+          </div>
+          <div class="game-bottom">
+            <p class="game-message" id="game-message" role="status" aria-live="polite">Listen to the word. Spell it out loud.</p>
+            <div class="actions" id="home-actions"><button class="button primary" id="start-button" disabled><svg class="icon fill"><use href="#i-play"/></svg>start</button><button class="button secondary" id="records-button"><svg class="icon"><use href="#i-trophy"/></svg>records</button></div>
+            <div class="actions" id="play-actions" hidden><button class="button primary" id="mic-button"><svg class="icon"><use href="#i-mic"/></svg><span id="mic-label">microphone</span></button><button class="button secondary" id="repeat-button"><svg class="icon"><use href="#i-repeat"/></svg><span>repeat please</span><small id="repeat-count">1</small></button></div>
+            <div class="actions" id="result-actions" hidden><button class="button primary" id="next-button"><span id="next-label">next word</span><svg class="icon"><use href="#i-arrow"/></svg></button><button class="button secondary" id="result-records" hidden><svg class="icon"><use href="#i-trophy"/></svg>records</button></div>
+            <div class="actions" id="error-actions" hidden><button class="button primary" id="retry-button">try again</button><button class="button secondary" id="back-button">back home</button></div>
+            <p class="tiny-note" id="tiny-note">One mistake ends the run. Every try helps you grow.</p>
+          </div>
+        </section>
+
+        <aside class="guide">
+          <div class="guide-heading"><span class="small-label">YOUR MISSION</span><h2>Listen.<br>Spell.<br><span>Shine.</span></h2></div>
+          <ol class="steps"><li><span class="step-number">01</span><div><b>Listen to your bee</b><p>Need to hear it again? You get one repeat per word.</p></div></li><li><span class="step-number">02</span><div><b>Say each letter</b><p>Tap the microphone. Spell in English, one letter at a time.</p></div></li><li><span class="step-number">03</span><div><b>Keep your streak</b><p>You have up to 10 seconds of silence between letters.</p></div></li></ol>
+          <div class="personal-best"><svg class="icon"><use href="#i-trophy"/></svg><div><span class="small-label">PERSONAL BEST</span><p><b id="side-best">0</b> <span>words in a row</span></p></div></div>
+        </aside>
+      </div>
+      <div class="below-game"><span id="list-label">Loading words…</span><span class="demo-tag" id="demo-tag" hidden>DEMO WORD LIST</span><span class="local-note">Progress saved on this browser</span></div>
+      <p class="storage-warning" id="storage-warning" hidden role="status">Your browser could not save your progress. Export a backup from records before leaving.</p>
+    </main>
+    <footer>Made for little word wizards.<span>Say the letters, not the whole word.</span></footer>
+  </div>
+
+  <dialog id="records-dialog" aria-labelledby="records-title">
+    <div class="dialog-top"><div><p class="eyebrow">YOUR HONEY COLLECTION</p><h2 id="records-title">records</h2></div><button class="icon-button" data-close aria-label="Close records"><svg class="icon"><use href="#i-close"/></svg></button></div>
+    <div class="record-summary"><div><span>BEST STREAK</span><b id="records-best">0</b><small>words in a row</small></div><div><span>TOTAL CORRECT</span><b id="records-total">0</b><small>every word counts</small></div></div>
+    <h3>A little more practice</h3><p class="dialog-note">These words appear more often until you get them right.</p><div class="practice-words" id="practice-words"></div>
+    <h3>Recent runs</h3><div id="runs"></div>
+    <div class="backup-actions"><button class="button secondary small" id="export-button"><svg class="icon"><use href="#i-download"/></svg>export backup</button><button class="button secondary small" id="import-button">import backup</button><input type="file" id="import-file" accept="application/json,.json" hidden/></div><p class="dialog-note" id="backup-status" role="status">Backups include scores and practice words, never audio.</p>
+    <div id="import-confirm" hidden><p>Replace this browser's progress with the selected backup?</p><button class="button primary small" id="confirm-import">replace progress</button><button class="button secondary small" id="cancel-import">cancel</button></div>
+  </dialog>
+  <dialog id="settings-dialog" aria-labelledby="settings-title">
+    <div class="dialog-top"><div><p class="eyebrow">MAKE YOURSELF AT HOME</p><h2 id="settings-title">settings</h2></div><button class="icon-button" data-close aria-label="Close settings"><svg class="icon"><use href="#i-close"/></svg></button></div>
+    <form id="word-settings-form" class="word-settings">
+      <h3>Word list</h3>
+      <label class="field-label" for="word-source">Words to practice</label>
+      <select id="word-source"><option value="demo">Demo word list</option><option value="custom">Registered words only</option><option value="both">Both: demo + registered words</option></select>
+      <label class="field-label" for="custom-words">Register your words</label>
+      <textarea id="custom-words" rows="5" spellcheck="false" aria-describedby="words-help words-count" placeholder="apple&#10;beautiful&#10;friend"></textarea>
+      <p class="dialog-note" id="words-help">Separate words with a new line, space, comma or semicolon. Use 1–40 English letters (A–Z) per word, up to 10,000 words. Edit this list to add or remove words.</p>
+      <p class="dialog-note" id="words-count"></p>
+      <button type="submit" class="button primary small" id="save-words">save words & selection</button>
+      <p class="dialog-note" id="words-status" role="status" aria-live="polite"></p>
+      <p class="dialog-note">Words and your selection are saved on this browser. Each selection keeps its own records.</p>
+    </form>
+    <h3>Sound & voice</h3>
+    <label class="field-label" for="accent">English accent</label><select id="accent"><option value="en-US">American English · A to Z (zee)</option><option value="en-GB">British English · A to Z (zed)</option></select>
+    <label class="field-label" for="voice-select">Your bee's voice</label><select id="voice-select"><option value="">Automatic English voice</option></select>
+    <button class="button secondary small" id="test-voice">hear “hello”</button>
+    <label class="check-label"><input type="checkbox" id="effects" checked/> Play countdown, celebration and game-over sounds</label>
+    <p class="dialog-note">Your bee always reads the word aloud. The microphone needs permission and may use your browser's online speech service. This game does not record or save audio.</p>
+    <p class="dialog-note">Voice recognition can mishear letters. Try a quiet room and spell each letter clearly.</p>
+  </dialog>
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>

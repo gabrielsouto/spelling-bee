@@ -1,0 +1,7 @@
+{
+  "id": "demo-v1",
+  "title": "Practice words",
+  "demo": true,
+  "language": "en-US",
+  "words": ["apple", "bee", "book", "cat", "dog", "fish", "flower", "friend", "garden", "happy", "house", "moon", "orange", "school", "star", "sun", "table", "tree", "water", "yellow"]
+}
